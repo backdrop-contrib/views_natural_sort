@@ -36,3 +36,14 @@ function views_natural_sort_views_data_alter(&$views_data) {
     }
   }
 }
+
+/**
+ * Implements hook_views_plugins_alter().
+ */
+function views_natural_sort_views_plugins_alter(&$plugins) {
+  // Add apachesolr to the base of the node row plugin.
+  $plugins['style']['table']['handler'] = 'views_natural_sort_plugin_style_table';
+  $plugins['style']['table']['path'] = drupal_get_path('module', 'views_natural_sort') . '/plugins';
+  $plugins['style']['table']['file'] = 'views_natural_sort_plugin_style_table.inc';
+  dpm($plugins);
+}

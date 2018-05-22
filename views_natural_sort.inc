@@ -146,7 +146,7 @@ function _views_natural_sort_number_transform_match_callback(array $match) {
     // that would be sorted higher than a space when a number is being compared
     // against a longer one that is identical in negative numbers. This is so
     // that longer numbers are always LESS than sorter numbers that have
-    // identical beginnings. Ex: -3.05 and -3.05011
+    // identical beginnings. Ex: -3.05 and -3.05011.
     $digits       = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ');
     $intermediate = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k');
     $rev_digits   = array('9', '8', '7', '6', '5', '4', '3', '2', '1', '0', ':');

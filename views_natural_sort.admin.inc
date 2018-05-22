@@ -96,9 +96,9 @@ function views_natural_sort_settings_form() {
  */
 function views_natural_sort_settings_form_submit($form, &$form_state) {
   $beginning_words = explode(',', $form_state['values']['beginning_words']);
-  array_walk($beginning_words, create_function('&$val', '$val = trim($val);'));
+  array_walk($beginning_words, 'views_natural_sort_trim');
   $words = explode(',', $form_state['values']['words']);
-  array_walk($words, create_function('&$val', '$val = trim($val);'));
+  array_walk($words, 'views_natural_sort_trim');
   $symbols = trim($form_state['values']['symbols']);
 
   variable_set('views_natural_sort_beginning_words_remove', $beginning_words);
@@ -166,7 +166,7 @@ function views_natural_sort_rebuild_index($entry_type, &$context) {
       array(
         '@max' => $sandbox['max'],
         '@count' => $sandbox['current'],
-        '@entry_type' => $entry_type['entity_type'] . ':' . $entry_type['field']
+        '@entry_type' => $entry_type['entity_type'] . ':' . $entry_type['field'],
       )
     );
     $sandbox['current']++;
@@ -187,4 +187,11 @@ function views_natural_sort_rebuild_index_finished($success, $results, $operatio
       '%count' => format_plural($results['entries'], '1 entry', '@count entries'),
     )));
   }
+}
+
+/**
+ * Trims the string.
+ */
+function views_natural_sort_trim(&$val) {
+  $val = trim($val);
 }

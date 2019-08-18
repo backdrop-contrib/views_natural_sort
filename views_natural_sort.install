@@ -181,7 +181,6 @@ function views_natural_sort_update_7201() {
 /**
  * Removing the queue because queuing didn't work out.
  */
-
 function views_natural_sort_update_7202() {
   DrupalQueue::get('views_natural_sort_index_queue')->deleteQueue();
 }

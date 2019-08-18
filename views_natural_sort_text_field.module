@@ -135,12 +135,14 @@ function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data($en
   return $data;
 }
 
+/**
+ * Implements hook_views_natural_sort_queue_rebuild_data_count().
+ */
 function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data_count($entry_type) {
   if (!in_array($entry_type, views_natural_sort_text_field_views_natural_sort_get_entry_types())) {
     return array();
   }
   $field = field_info_field($entry_type['field']);
-  $data = array();
   $bundles = array();
 
   if (isset($field['bundles'][$entry_type['entity_type']])) {

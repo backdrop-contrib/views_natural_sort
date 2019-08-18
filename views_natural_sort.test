@@ -92,7 +92,7 @@ class ViewsNaturalSortBasicTest extends ViewsTestCase {
    */
   public function testNaturalSortUnicodeSymbols() {
     module_load_include('inc', 'views_natural_sort', 'views_natural_sort');
-    $symbols = variable_set('views_natural_sort_symbols_remove', "#…\",'\\()[]«?!»¡¿");
+    variable_set('views_natural_sort_symbols_remove', "#…\",'\\()[]«?!»¡¿");
     $titles = array(
       'Cuando… se abre, ¿dará algún tipo de señal?',
     );
@@ -146,6 +146,9 @@ class ViewsNaturalSortBasicTest extends ViewsTestCase {
     );
   }
 
+  /**
+   * Test storing long unicode values.
+   */
   public function testStoringLongUnicode() {
     $node = $this->drupalCreateNode(array(
       'type' => 'views_natural_sort_test_content',

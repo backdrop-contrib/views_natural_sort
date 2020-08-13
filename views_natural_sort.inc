@@ -186,7 +186,7 @@ function views_natural_sort_days_of_the_week_sort_days($string) {
     $string = preg_replace(
       array(
         '/\b' . $translated_day . '\b/i',
-        '/\b(' . implode(views_natural_sort_days_of_the_week_get_acceptable_day_abbreviations($day_list[$current_day]), '\.?|') . ')\b/i',
+        '/\b(' . implode('\.?|', views_natural_sort_days_of_the_week_get_acceptable_day_abbreviations($day_list[$current_day])) . ')\b/i',
       ),
       ' ' . $i . ' ',
       $string

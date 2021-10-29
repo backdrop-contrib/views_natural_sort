@@ -110,7 +110,7 @@ class views_natural_sort_handler_sort extends views_handler_sort {
         return t('natural asc');
 
       case 'NDESC':
-        return t('natural asc');
+        return t('natural desc');
     }
   }
 

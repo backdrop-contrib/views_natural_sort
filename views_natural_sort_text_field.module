@@ -115,8 +115,17 @@ function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data($en
   // built as they are entered.
   $query = db_select($entity_info['base table'], 'e')
     ->fields('e', array($entity_info['entity keys']['id']))
-    ->condition('e.' . $entity_info['bundle keys']['bundle'], $bundles, 'IN')
     ->orderBy('e.' . $entity_info['entity keys']['id']);
+  // Check if bundle keys is defined (when using on users fields it isn't)
+  if (!empty($entity_info['bundle keys'])) {
+    $condition_bundles_table = 'e';
+    // When using on a taxonomy term field we need to include the taxonomy vocabulary table
+    if ($entity_info['base table'] == 'taxonomy_term_data') {
+      $query->join('taxonomy_vocabulary', 'v', 'v.vid = e.vid');
+      $condition_bundles_table = 'v';
+    }
+    $query->condition($condition_bundles_table . '.' . $entity_info['bundle keys']['bundle'], $bundles, 'IN');
+  }
   $query->join('field_data_' . $entry_type['field'], 'f', 'f.entity_type = :entity_type AND f.deleted = 0 AND f.entity_id = e.' . $entity_info['entity keys']['id'], array('entity_type' => $entry_type['entity_type']));
   if ($limit) {
     $query->range($offset, $limit);
@@ -152,8 +161,17 @@ function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data_cou
   }
   $entity_info = entity_get_info($entry_type['entity_type']);
   $query = db_select($entity_info['base table'], 'e')
-    ->fields('e', array($entity_info['entity keys']['id']))
-    ->condition('e.' . $entity_info['bundle keys']['bundle'], $bundles, 'IN');
+    ->fields('e', array($entity_info['entity keys']['id']));
+  // Check if bundle keys is defined (when using on users fields it isn't)
+  if (!empty($entity_info['bundle keys'])) {
+    $condition_bundles_table = 'e';
+    // When using on a taxonomy term field we need to include the taxonomy vocabulary table
+    if ($entity_info['base table'] == 'taxonomy_term_data') {
+      $query->join('taxonomy_vocabulary', 'v', 'v.vid = e.vid');
+      $condition_bundles_table = 'v';
+    }
+    $query->condition($condition_bundles_table . '.' . $entity_info['bundle keys']['bundle'], $bundles, 'IN');
+  }
   $query->join('field_data_' . $entry_type['field'], 'f', 'f.entity_type = :entity_type AND f.deleted = 0 AND f.entity_id = e.' . $entity_info['entity keys']['id'], array('entity_type' => $entry_type['entity_type']));
   return $query->execute()
     ->rowCount();

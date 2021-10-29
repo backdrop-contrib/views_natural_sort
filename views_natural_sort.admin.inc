@@ -158,9 +158,14 @@ function views_natural_sort_rebuild_index($entry_type, &$context) {
     $sandbox['max'] = module_invoke($entry_type['module'], 'views_natural_sort_queue_rebuild_data_count', $entry_type);
     $sandbox['items_per_batch'] = variable_get('views_natural_sort_rebuild_items_per_batch', '500');
   }
+  if (empty($results['entries'])) {
+    $results['entries'] = 0;
+  }
   $items = module_invoke($entry_type['module'], 'views_natural_sort_queue_rebuild_data', $entry_type, $sandbox['current'], $sandbox['items_per_batch']);
   for ($i = 0; $i < count($items) && $sandbox['current'] < $sandbox['max']; $i++) {
     views_natural_sort_store($items[$i]);
+    $sandbox['current']++;
+    $results['entries']++;
     $context['message'] = t(
       'Now processing @count of @max @entry_type items.',
       array(
@@ -169,9 +174,7 @@ function views_natural_sort_rebuild_index($entry_type, &$context) {
         '@entry_type' => $entry_type['entity_type'] . ':' . $entry_type['field'],
       )
     );
-    $sandbox['current']++;
   }
-  $results['entries'] = $sandbox['current'];
   if ($sandbox['current'] != $sandbox['max']) {
     $context['finished'] = $sandbox['current'] / $sandbox['max'];
   }

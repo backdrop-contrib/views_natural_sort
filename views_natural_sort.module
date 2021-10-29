@@ -111,7 +111,7 @@ function views_natural_sort_views_natural_sort_get_entry_types() {
  */
 function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $offset = 0, $limit = NULL) {
   $supported_entity_types = views_natural_sort_get_entry_types();
-  if (empty($supported_entity_properties[$entry_type['entity_type'] . '|' . $entry_type['field']])) {
+  if (empty($supported_entity_types[$entry_type['entity_type'] . '|' . $entry_type['field']])) {
     return array();
   }
 
@@ -140,6 +140,7 @@ function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $
       'content' => $entity->$field_name,
     );
   }
+  return $data;
 }
 
 /**
@@ -147,9 +148,10 @@ function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $
  */
 function views_natural_sort_views_natural_sort_queue_rebuild_data_count($entry_type) {
   $supported_entity_types = views_natural_sort_get_entry_types();
-  if (empty($supported_entity_properties[$entry_type['entity_type'] . '|' . $entry_type['field']])) {
+  if (empty($supported_entity_types[$entry_type['entity_type'] . '|' . $entry_type['field']])) {
     return 0;
   }
+  $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', $entry_type['entity_type'])
     ->count()
     ->execute();

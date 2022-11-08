@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements hook_views_data_alter().
+ * Implements hook_views_data_alter().().
  */
 function views_natural_sort_views_data_alter(&$views_data) {
   $supported_entity_properties = views_natural_sort_get_supported_entity_properties();
@@ -24,9 +24,9 @@ function views_natural_sort_views_data_alter(&$views_data) {
       continue;
     }
     foreach ($data as $view_field => &$view_field_data) {
-      if (isset($view_field_data['field']) &&
-        isset($view_field_data['sort']) &&
-        $view_field_data['sort']['handler'] == 'views_handler_sort' &&
+      if (isset($view_field_data['field']) && 
+        isset($view_field_data['sort']) && 
+        $view_field_data['sort']['handler'] == 'views_handler_sort' && 
         ((isset($view_field_data['field']['field']) && in_array($view_field_data['field']['field'], $schema_fields[$table])) ||
           in_array($view_field, $schema_fields[$table]))) {
         // We've verified that this is a perfect candidate to add our sort

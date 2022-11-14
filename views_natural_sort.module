@@ -74,7 +74,8 @@ function views_natural_sort_theme() {
 }
 
 /**
- * Theme the form for the table style plugin
+ * Theme the form for the table style plugin, based on
+ * theme_views_ui_style_plugin_table().
  */
 function theme_views_natural_sort_style_plugin_table($variables) {
   $form = $variables['form'];
@@ -99,7 +100,7 @@ function theme_views_natural_sort_style_plugin_table($variables) {
       'align' => 'center',
     ),
     array(
-      'data' => t('Sort Naturally'),
+      'data' => t('Sort naturally'),
       'align' => 'center',
     ),
     array(
@@ -127,8 +128,10 @@ function theme_views_natural_sort_style_plugin_table($variables) {
         'data' => drupal_render($form['default'][$id]),
         'align' => 'center',
       );
-      // TODO: ADD Natural Logic here.
-      $row[] = '';
+      $row[] = array(
+        'data' => drupal_render($form['info'][$id]['natural_sort']),
+        'align' => 'center',
+      );
     }
     else {
       $row[] = '';

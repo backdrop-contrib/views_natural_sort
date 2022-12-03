@@ -32,7 +32,23 @@ function views_natural_sort_views_data_alter(&$views_data) {
         // We've verified that this is a perfect candidate to add our sort
         // handler to.
         $view_field_data['sort']['handler'] = 'views_natural_sort_handler_sort';
+
+        switch ($view_field_data['field']['handler']) {
+          case 'views_handler_field_node':
+            $view_field_data['field']['handler'] = 'views_natural_sort_handler_field_node';
+            break;
+          // @todo: Add support for other field handlers.
+        }
       }
     }
   }
+}
+
+/**
+ * Implements hook_views_plugins_alter().
+ */
+function views_natural_sort_views_plugins_alter(&$plugins) {
+  $plugins['style']['table']['handler'] = 'views_natural_sort_plugin_style_table';
+  $plugins['style']['table']['path'] = drupal_get_path('module', 'views_natural_sort') . '/plugins';
+  $plugins['style']['table']['file'] = 'views_natural_sort_plugin_style_table.inc';
 }

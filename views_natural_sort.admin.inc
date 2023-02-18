@@ -167,7 +167,7 @@ function views_natural_sort_rebuild_index($entry_type, &$context) {
     $sandbox['current']++;
     $results['entries']++;
     $context['message'] = t(
-      'Now processing @count of @max @entry_type items.',
+      'Now processing @count of @max @entry_type items.', 
       array(
       '@max' => $sandbox['max'],
       '@count' => $sandbox['current'],

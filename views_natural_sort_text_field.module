@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements hook_views_api().
+ * Implements hook_views_api().().
  */
 function views_natural_sort_text_field_views_api() {
   return array(
@@ -15,7 +15,7 @@ function views_natural_sort_text_field_views_api() {
 }
 
 /**
- * Implements hook_module_implements_alter().
+ * Implements hook_module_implements_alter().().
  */
 function views_natural_sort_text_field_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'form_alter' && isset($implementations['views_natural_sort_text_field'])) {
@@ -25,7 +25,7 @@ function views_natural_sort_text_field_module_implements_alter(&$implementations
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().().
  */
 function views_natural_sort_text_field_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
   $potential_fields = views_natrual_sort_text_get_potential_fields();
@@ -43,7 +43,7 @@ function views_natural_sort_text_field_form_field_ui_field_edit_form_alter(&$for
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().().
  */
 function views_natural_sort_text_field_form_field_ui_field_edit_form_alter_submit($form, $form_state) {
   // Rebuild index for this field.
@@ -60,7 +60,7 @@ function views_natural_sort_text_field_form_field_ui_field_edit_form_alter_submi
 }
 
 /**
- * Implements hook_views_natural_sort_get_entry_types().
+ * Implements hook_views_natural_sort_get_entry_types().().
  */
 function views_natural_sort_text_field_views_natural_sort_get_entry_types($fields = array()) {
   if (empty($fields)) {
@@ -93,7 +93,7 @@ function views_natural_sort_text_field_get_entry_types_from_field($field) {
 }
 
 /**
- * Implements hook_views_natural_sort_queue_rebuild_data().
+ * Implements hook_views_natural_sort_queue_rebuild_data().().
  */
 function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data($entry_type, $offset = 0, $limit = NULL) {
   if (!in_array($entry_type, views_natural_sort_text_field_views_natural_sort_get_entry_types())) {
@@ -145,7 +145,7 @@ function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data($en
 }
 
 /**
- * Implements hook_views_natural_sort_queue_rebuild_data_count().
+ * Implements hook_views_natural_sort_queue_rebuild_data_count().().
  */
 function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data_count($entry_type) {
   if (!in_array($entry_type, views_natural_sort_text_field_views_natural_sort_get_entry_types())) {
@@ -178,7 +178,7 @@ function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data_cou
 }
 
 /**
- * Implements hook_field_attach_insert().
+ * Implements hook_field_attach_insert().().
  */
 function views_natural_sort_text_field_field_attach_insert($entity_type, $entity) {
   $configured_fields = views_natural_sort_text_field_get_configured_fields();
@@ -190,7 +190,7 @@ function views_natural_sort_text_field_field_attach_insert($entity_type, $entity
 }
 
 /**
- * Implements hook_field_attach_update().
+ * Implements hook_field_attach_update().().
  */
 function views_natural_sort_text_field_field_attach_update($entity_type, $entity) {
   $configured_fields = views_natural_sort_text_field_get_configured_fields();
@@ -228,8 +228,8 @@ function views_natrual_sort_text_get_potential_fields() {
   $all_fields = field_info_fields();
   $returned_fields = array();
   foreach ($all_fields as $field_name => $field) {
-    if ($field['module'] == 'text' &&
-      $field['storage']['type'] == 'field_sql_storage' &&
+    if ($field['module'] == 'text' &&  
+      $field['storage']['type'] == 'field_sql_storage' &&  
       $field['columns']['value']['type'] == 'varchar') {
       $returned_fields[$field['id']] = $field;
     }
@@ -241,7 +241,7 @@ function views_natrual_sort_text_get_potential_fields() {
  * Helper function to store the text field vns records.
  *
  * @param string $entity_type
- *   A valid drupal entity type machine name.
+ *   A valid backdrop entity type machine name.
  * @param object $entity
  *   A standard object representing an entity from like entity_load().
  * @param array $field
@@ -255,7 +255,7 @@ function _views_natural_sort_text_field_store($entity_type, $entity, array $fiel
  * Convert an entity object to a vns record.
  *
  * @param string $entity_type
- *   A valid drupal entity type machine name.
+ *   A valid backdrop entity type machine name.
  * @param object $entity
  *   A standard object representing an entity from like entity_load().
  * @param array $field
@@ -291,4 +291,16 @@ function _views_natural_sort_text_field_to_vns($entity_type, $entity, array $fie
     }
   }
   return $entries;
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function views_natural_sort_text_field_autoload_info() {
+  return array(
+    'views_natural_sort_handler_field_node' => 'handlers/views_natural_sort_handler_field_node.inc',
+    'views_natural_sort_handler_sort' => 'handlers/views_natural_sort_handler_sort.inc',
+    'views_natural_sort_handler_sort_text_field' => 'handlers/views_natural_sort_handler_sort_text_field.inc',
+    'views_natural_sort_plugin_style_table' => 'plugins/views_natural_sort_plugin_style_table.inc',
+  );
 }

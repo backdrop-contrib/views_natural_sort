@@ -25,7 +25,8 @@
  */
 
 /**
- * Implements hook_menu().().
+ * Implements hook_menu().
+().
  */
 function views_natural_sort_menu() {
   $items = array();
@@ -42,7 +43,8 @@ function views_natural_sort_menu() {
 }
 
 /**
- * Implements hook_views_api().().
+ * Implements hook_views_api().
+().
  */
 function views_natural_sort_views_api() {
   return array(
@@ -51,7 +53,8 @@ function views_natural_sort_views_api() {
 }
 
 /**
- * Implements hook_implements_alter().().
+ * Implements hook_implements_alter().
+().
  */
 function views_natural_sort_module_implements_alter(&$implements, $hook) {
   if ($hook == 'views_data_alter') {
@@ -188,7 +191,8 @@ function theme_views_natural_sort_style_plugin_table($variables) {
 }
 
 /**
- * Implements hook_views_natural_sort_get_entry_types().().
+ * Implements hook_views_natural_sort_get_entry_types().
+().
  */
 function views_natural_sort_views_natural_sort_get_entry_types() {
   $supported_entity_properties = views_natural_sort_get_views_configurable_properties();
@@ -206,7 +210,8 @@ function views_natural_sort_views_natural_sort_get_entry_types() {
 }
 
 /**
- * Implements hook_views_natural_sort_queue_rebuild_data().().
+ * Implements hook_views_natural_sort_queue_rebuild_data().
+().
  */
 function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $offset = 0, $limit = NULL) {
   $supported_entity_types = views_natural_sort_get_entry_types();
@@ -243,7 +248,8 @@ function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $
 }
 
 /**
- * Implements hook_views_natural_sort_queue_rebuild_data_count().().
+ * Implements hook_views_natural_sort_queue_rebuild_data_count().
+().
  */
 function views_natural_sort_views_natural_sort_queue_rebuild_data_count($entry_type) {
   $supported_entity_types = views_natural_sort_get_entry_types();
@@ -258,7 +264,8 @@ function views_natural_sort_views_natural_sort_queue_rebuild_data_count($entry_t
 }
 
 /**
- * Implements hook_entity_insert().().
+ * Implements hook_entity_insert().
+().
  *
  * This keeps our natural sort index up to date.
  */
@@ -272,7 +279,8 @@ function views_natural_sort_entity_insert($entity, $type) {
 }
 
 /**
- * Implements hook_entity_update().().
+ * Implements hook_entity_update().
+().
  *
  * This keeps our natural sort index up to date.
  */
@@ -281,7 +289,8 @@ function views_natural_sort_entity_update($entity, $type) {
 }
 
 /**
- * Implements hook_entity_delete().().
+ * Implements hook_entity_delete().
+().
  *
  * This keep sour natural sort index clean.
  */
@@ -495,7 +504,7 @@ function views_natural_sort_get_transformations(array $index_entry) {
 function views_natural_sort_get_supported_entity_properties() {
   $supported_properties = &backdrop_static(__FUNCTION__, array());
   if (empty($supported_properties)) {
-    $entity_property_info = entity_get_property_info();
+    $entity_property_info = entity_plus_get_property_info();
     $entity_info = entity_get_info();
     foreach ($entity_property_info as $entity_type => $info) {
       if (empty($supported_properties[$entity_type])) {
@@ -506,7 +515,7 @@ function views_natural_sort_get_supported_entity_properties() {
         $properties = $info['properties'];
       }
       foreach ($properties as $property => $property_info) {
-        $property_info += entity_property_info_defaults();
+        $entity_property_info = entity_plus_get_property_info();
         if ($property_info['type'] != 'text' || empty($property_info['schema field'])) {
           continue;
         }

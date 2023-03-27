@@ -165,8 +165,7 @@ function theme_views_natural_sort_style_plugin_table($variables) {
         'data' => backdrop_render($form['info'][$id]['natural_sort']),
         'align' => 'center',
       );
-    }
-    else {
+    } else {
       $row[] = '';
       $row[] = '';
       $row[] = '';
@@ -181,9 +180,9 @@ function theme_views_natural_sort_style_plugin_table($variables) {
 
   // Add the special 'None' row.
   $rows[] = array(t('None'), '', '', '', '', '', array(
-      'align' => 'center',
-      'data' => backdrop_render($form['default'][-1]),
-    ), '', '');
+    'align' => 'center',
+    'data' => backdrop_render($form['default'][-1]),
+  ), '', '');
 
   $output .= theme('table', array('header' => $header, 'rows' => $rows));
   $output .= backdrop_render_children($form);
@@ -241,7 +240,7 @@ function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $
       'entity_type' => $entry_type['entity_type'],
       'field' => $field_name,
       'delta' => 0,
-      'content' => $entity->$field_name,
+      'content' => (isset($entity->$field_name) ? $entity->$field_name : ""),
     );
   }
   return $data;
@@ -343,18 +342,18 @@ function views_natural_sort_store(array $index_entry) {
   // hook_schema_alter() on me.
   return db_merge('views_natural_sort')
     ->key(array(
-    'eid' => $index_entry['eid'],
-    'entity_type' => $index_entry['entity_type'],
-    'field' => $index_entry['field'],
-    'delta' => $index_entry['delta'],
-  ))
+      'eid' => $index_entry['eid'],
+      'entity_type' => $index_entry['entity_type'],
+      'field' => $index_entry['field'],
+      'delta' => $index_entry['delta'],
+    ))
     ->fields(array(
-    'eid' => $index_entry['eid'],
-    'entity_type' => $index_entry['entity_type'],
-    'field' => $index_entry['field'],
-    'delta' => $index_entry['delta'],
-    'content' => backdrop_substr($string, 0, 255),
-  ))
+      'eid' => $index_entry['eid'],
+      'entity_type' => $index_entry['entity_type'],
+      'field' => $index_entry['field'],
+      'delta' => $index_entry['delta'],
+      'content' => backdrop_substr($string, 0, 255),
+    ))
     ->execute();
 }
 
@@ -559,10 +558,12 @@ function views_natural_sort_get_views_configurable_properties() {
     }
     foreach ($supported_entity_properties as $entity => $properties) {
       foreach ($properties as $property => $schema_info) {
-        if (!empty($views_data[$schema_info['base_table']][$schema_info['schema_field']]) &&
+        if (
+          !empty($views_data[$schema_info['base_table']][$schema_info['schema_field']]) &&
           !empty($views_data[$schema_info['base_table']][$schema_info['schema_field']]['sort']) &&
           !empty($views_data[$schema_info['base_table']][$schema_info['schema_field']]['sort']['handler']) &&
-          in_array($views_data[$schema_info['base_table']][$schema_info['schema_field']]['sort']['handler'], array('views_natural_sort_handler_sort', 'views_handler_sort'))) {
+          in_array($views_data[$schema_info['base_table']][$schema_info['schema_field']]['sort']['handler'], array('views_natural_sort_handler_sort', 'views_handler_sort'))
+        ) {
           $views_configurable_properties[$entity][$property] = $schema_info;
         }
       }
@@ -586,8 +587,10 @@ function views_natural_sort_get_views_configurable_properties() {
  */
 function views_natural_sort_entity_to_vns($entity, $entity_type, $field) {
   $supported_entity_properties = views_natural_sort_get_views_configurable_properties();
-  if (empty($supported_entity_properties[$entity_type]) ||
-    empty($supported_entity_properties[$entity_type][$field])) {
+  if (
+    empty($supported_entity_properties[$entity_type]) ||
+    empty($supported_entity_properties[$entity_type][$field])
+  ) {
     throw new Exception("$entity_type -> $field doesn't exist. Cannot create Views Natural Sort record");
   }
   $entity_info = entity_get_info($entity_type);
@@ -597,7 +600,7 @@ function views_natural_sort_entity_to_vns($entity, $entity_type, $field) {
     'entity_type' => $entity_type,
     'field' => $field,
     'delta' => 0,
-    'content' => (isset($entity->$field_name) ? $entity->$field_name : ""),
+    'content' => $entity->$field,
   );
 }
 

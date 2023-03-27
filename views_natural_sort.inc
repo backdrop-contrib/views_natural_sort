@@ -22,8 +22,8 @@ function views_natural_sort_remove_beginning_words($string) {
 
   array_walk($beginning_words, 'preg_quote');
   return preg_replace(
-    '/^(' . implode('|', $beginning_words) . ')\s+/iu', 
-    '', 
+    '/^(' . implode('|', $beginning_words) . ')\s+/iu',
+    '',
     $string
   );
 }
@@ -48,11 +48,11 @@ function views_natural_sort_remove_words($string) {
     array(
     '/\s(' . implode('|', $words) . ')\s+/iu',
     '/^(' . implode('|', $words) . ')\s+/iu',
-  ), 
+  ),
     array(
     ' ',
     '',
-  ), 
+  ),
     $string
   );
 }
@@ -72,8 +72,8 @@ function views_natural_sort_remove_symbols($string) {
     return $string;
   }
   return preg_replace(
-    '/[' . preg_quote($symbols) . ']/u', 
-    '', 
+    '/[' . preg_quote($symbols) . ']/u',
+    '',
     $string
   );
 }
@@ -102,8 +102,8 @@ function views_natural_sort_numbers($string) {
 //   period, then an optional series of digits
   // - a series of digits (with optional embedded commas)
   return preg_replace_callback(
-    '/(\s-|^-)?(?:(\d[\d,]*)?\.(\d+)|(\d[\d,]*))/', 
-    '_views_natural_sort_number_transform_match_callback', 
+    '/(\s-|^-)?(?:(\d[\d,]*)?\.(\d+)|(\d[\d,]*))/',
+    '_views_natural_sort_number_transform_match_callback',
     $string
   );
 }
@@ -173,7 +173,7 @@ function views_natural_sort_days_of_the_week_sort_days($string) {
   // Adding a configuration so that in the future an admin page can be made
   // to switch which day is the first day of the week based on local.
   $used_language = isset($language->language) ? $language->language : 'en';
-  $first_day = config_get('views_natural_sort.settings', 'views_natural_sort_days_of_the_week_first_day_' . $used_language);
+  $first_day = config_get('system.date', 'first_day'. $used_language, "Sunday");
 
   $day_list = views_natural_sort_days_of_the_week_get_default_days();
   $sorted_days = $day_list;
@@ -187,8 +187,8 @@ function views_natural_sort_days_of_the_week_sort_days($string) {
       array(
       '/\b' . $translated_day . '\b/i',
       '/\b(' . implode('\.?|', views_natural_sort_days_of_the_week_get_acceptable_day_abbreviations($day_list[$current_day])) . ')\b/i',
-    ), 
-      ' ' . $i . ' ', 
+    ),
+      ' ' . $i . ' ',
       $string
     );
   }
@@ -225,7 +225,7 @@ function views_natural_sort_days_of_the_week_get_acceptable_day_abbreviations($d
   $default_days = views_natural_sort_days_of_the_week_get_default_days();
   $index = array_search($day, $default_days);
   $default_abbrev = views_natural_sort_days_of_the_week_get_default_day_abbreviations();
-  return config_get('views_natural_sort.settings', 
+  return config_get('views_natural_sort.settings',
     'views_natural_sort_days_of_the_week_' . $lang . '_' . $day);
 }
 

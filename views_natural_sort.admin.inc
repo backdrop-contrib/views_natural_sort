@@ -74,7 +74,7 @@ function views_natural_sort_settings_form() {
     '#type' => 'checkbox',
     '#title' => 'Sort days of the week and their abbreviations',
     '#description' => "Checking this setting will allow sorting of days of the week in their proper order starting with the day of the week that is configurable by you and for each language.",
-    '#efault_value' => $config->get('views_natural_sort_days_of_the_week_enabled'),
+    '#default_value' => $config->get('views_natural_sort_days_of_the_week_enabled'),
   );
   $form['batch_items'] = array(
     '#type' => 'textfield',
@@ -167,7 +167,7 @@ function views_natural_sort_rebuild_index($entry_type, &$context) {
     $sandbox['current']++;
     $results['entries']++;
     $context['message'] = t(
-      'Now processing @count of @max @entry_type items.', 
+      'Now processing @count of @max @entry_type items.',
       array(
       '@max' => $sandbox['max'],
       '@count' => $sandbox['current'],

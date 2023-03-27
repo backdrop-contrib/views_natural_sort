@@ -173,7 +173,7 @@ function views_natural_sort_days_of_the_week_sort_days($string) {
   // Adding a configuration so that in the future an admin page can be made
   // to switch which day is the first day of the week based on local.
   $used_language = isset($language->language) ? $language->language : 'en';
-  $first_day = config_get('system.date', 'first_day'. $used_language, "Sunday");
+  $first_day = config_get('system.date', 'first_day'. $used_language);
 
   $day_list = views_natural_sort_days_of_the_week_get_default_days();
   $sorted_days = $day_list;

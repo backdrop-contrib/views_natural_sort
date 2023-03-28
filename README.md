@@ -12,7 +12,7 @@ Provides a views filter that sorts node titles by a more natural manner by ignor
 Bugs and feature requests should be reported in the
 [Issue Queue](https://github.com/backdrop-contrib/views_natural_sort/issues).
 
-## Current Maintainer
+## Current Maintainers
 
 [Justin Keiser](https://github.com/keiserjb)<br>
 [Allan Chappell](https://github.com/generalredneck)

@@ -14,7 +14,7 @@ Bugs and feature requests should be reported in the
 
 ## Current Maintainer
 
-[Justin Keiser](https://github.com/keiserjb)
+[Justin Keiser](https://github.com/keiserjb)<br>
 [Allan Chappell](https://github.com/generalredneck)
 
 ## Credits

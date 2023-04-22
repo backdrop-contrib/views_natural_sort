@@ -1,6 +1,6 @@
 # Views Natural Sort
 
-Provides a views filter that sorts node titles by a more natural manner by ignoring articles like "The" and "A."
+Provides a views filter that sorts node titles by a more natural manner by ignoring articles like "A" "An" and "The."
 
 ## Installation
 

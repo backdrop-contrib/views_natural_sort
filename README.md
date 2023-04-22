@@ -2,6 +2,34 @@
 
 Provides a views filter that sorts node titles by a more natural manner by ignoring articles like "A" "An" and "The."
 
+Normal sort:
+
+A Chorus Line
+All American
+Fiddler on the Roof
+Oklahoma!
+The King And I
+Natural sort:
+
+All American
+A Chorus Line
+Fiddler on the Roof
+The King And I
+Oklahoma!
+Natural Sort also supports Numbers.
+
+Normal Sort:
+
+1 apple
+10 apples
+2 apples
+Natural Sort:
+
+1 apple
+2 apples
+10 apples
+This is done using a prebuilt, indexed table so it should perform well.
+
 ## Installation
 
 - Install this module using the official

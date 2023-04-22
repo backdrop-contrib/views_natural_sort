@@ -6,7 +6,8 @@
  */
 
 /**
- * Implements hook_views_data_alter().().
+ * Implements hook_views_data_alter().
+().
  */
 function views_natural_sort_views_data_alter(&$views_data) {
   $supported_entity_properties = views_natural_sort_get_supported_entity_properties();
@@ -44,8 +45,45 @@ function views_natural_sort_views_data_alter(&$views_data) {
   }
 }
 
+/** 
+ * Implements hook_views_data().
+ */
+function views_natural_sort_views_data() {
+  // Include the natural title argument in Node views. 
+  $data['views_natural_sort']['table']['join'] = array(
+    'node' => array(
+      'left_field' => 'nid',
+      'field' => 'eid',
+      // We only support this for node titles.
+      'extra' => array(
+        array(
+          'field' => 'field',
+          'value' => 'title',
+          'operator' => '=',
+        ),
+        array(
+          'field' => 'entity_type',
+          'value' => 'node',
+          'operator' => '=',
+        ),
+      )
+    ),
+  );
+  $data['views_natural_sort']['content'] = array(
+    'title' => 'Title - Natural',
+    'group' => t('Node'),
+    'help' => t('The natural title of a node.'),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+  );
+
+  return $data;
+}
+
 /**
- * Implements hook_views_plugins_alter().().
+ * Implements hook_views_plugins_alter().
+().
  */
 function views_natural_sort_views_plugins_alter(&$plugins) {
   $plugins['style']['table']['handler'] = 'views_natural_sort_plugin_style_table';

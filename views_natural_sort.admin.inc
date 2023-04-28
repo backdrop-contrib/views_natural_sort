@@ -74,7 +74,7 @@ function views_natural_sort_settings_form() {
     '#type' => 'checkbox',
     '#title' => 'Sort days of the week and their abbreviations',
     '#description' => "Checking this setting will allow sorting of days of the week in their proper order starting with the day of the week that is configurable by you and for each language.",
-    '#efault_value' => $config->get('views_natural_sort_days_of_the_week_enabled'),
+    '#default_value' => $config->get('views_natural_sort_days_of_the_week_enabled'),
   );
   $form['batch_items'] = array(
     '#type' => 'textfield',

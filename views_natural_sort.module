@@ -201,6 +201,7 @@ function views_natural_sort_views_natural_sort_get_entry_types() {
       $entry_types[] = array(
         'entity_type' => $entity_type,
         'field' => $property,
+        'schema_info' => $schema_info,
         'module' => 'views_natural_sort',
       );
     }
@@ -240,7 +241,7 @@ function views_natural_sort_views_natural_sort_queue_rebuild_data($entry_type, $
       'entity_type' => $entry_type['entity_type'],
       'field' => $field_name,
       'delta' => 0,
-      'content' => (isset($entity->$field_name) ? $entity->$field_name : ""),
+      'content' => $entity->{$entry_type['schema_info']['schema_field']},
     );
   }
   return $data;
